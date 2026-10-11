@@ -234,15 +234,9 @@ void ServiceNode::bootstrap_fallback() {
 
     std::vector<oxenmq::address> seed_nodes;
     if (oxenss::is_mainnet) {
-        seed_nodes.emplace_back(
-                "curve://storage.seed1.loki.network:22027/"
-                "63089194d7ed97c9bb9c1112501b09be1b4b8ff026ceeb339532ce240da03178");
-        seed_nodes.emplace_back(
-                "curve://public-eu.optf.ngo:22027/"
-                "3c157ed3c675f56280dc5d8b2f00b327b5865c127bf2c6c42becc3ca73d9132b");
-        seed_nodes.emplace_back(
-                "curve://imaginary.stream:22027/"
-                "c0cab39382531e5b6c6325c0f980e9ffb79b20a4c82bb96571f1ffdc3ee76d58");
+        // CubeOS: bootstrap only from CubeOS validators (CUBEOS_SS_SEEDS, set at configure time).
+        for (const char* seed : {CUBEOS_SS_SEEDS})
+            seed_nodes.emplace_back(seed);
     } else {
         seed_nodes.emplace_back(
                 "curve://storage.seed2.loki.network:38161/"

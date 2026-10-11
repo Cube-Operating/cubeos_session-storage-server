@@ -103,6 +103,18 @@ include(cmake/check_for_std_filesystem.cmake)
 
 add_subdirectory(external)
 
+# CubeOS: mainnet bootstrap seeds (the storage servers of CubeOS validators), as a comma-separated
+# list of OxenMQ curve addresses: curve://IP:OMQ_PORT/X25519_PUBKEY_HEX[,...].  Session's mainnet
+# seeds must never be used by a CubeOS storage server: bootstrapping from them imports Session's
+# swarms and chain height (the server then never leaves the SYNCING state).
+set(CUBEOS_SS_SEEDS "" CACHE STRING "CubeOS mainnet storage server bootstrap seeds")
+if(CUBEOS_SS_SEEDS STREQUAL "")
+  message(FATAL_ERROR "CUBEOS_SS_SEEDS is required (e.g. curve://109.122.27.74:22500/<validator 0 x25519 pubkey>)")
+endif()
+string(REPLACE "," "\",\"" CUBEOS_SS_SEEDS_LIST "${CUBEOS_SS_SEEDS}")
+add_compile_definitions(CUBEOS_SS_SEEDS="${CUBEOS_SS_SEEDS_LIST}")
+message(STATUS "CubeOS storage server seeds: ${CUBEOS_SS_SEEDS}")
+
 add_subdirectory(oxenss)
 
 if (BUILD_TESTS)
