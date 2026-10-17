@@ -20,7 +20,8 @@ namespace oxenss::server {
 using namespace std::literals;
 
 // Maximum incoming HTTPS request size, in bytes.
-inline constexpr uint64_t MAX_REQUEST_BODY_SIZE = 10 * 1024 * 1024;
+// CubeOS: 150 MB, so 100 MB attachments fit through onion requests to the file server
+inline constexpr uint64_t MAX_REQUEST_BODY_SIZE = 150 * 1024 * 1024;
 
 // Full uWebSocket http request/response objects:
 using HttpRequest = uWS::HttpRequest;

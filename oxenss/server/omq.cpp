@@ -273,7 +273,7 @@ OMQ::OMQ(
     omq_.set_general_threads(1);
 
     omq_.MAX_MSG_SIZE =
-            10 * 1024 * 1024;  // 10 MB (needed by the fileserver, and swarm msg serialization)
+            150 * 1024 * 1024;  // CubeOS: 150 MB (100 MB attachments to the fileserver); was 10 MB
 
     // Be explicit about wanting per-SN unique connection IDs:
     omq_.EPHEMERAL_ROUTING_ID = false;
